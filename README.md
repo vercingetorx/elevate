@@ -62,6 +62,33 @@ elevate apt-get update
 - The environment is rebuilt from scratch to neutralize vectors such as `LD_PRELOAD` or `PYTHONPATH`. The only inherited piece is `TERM`, and even that is validated to simple ASCII before use.
 - Because the binary immediately `execve`s the target, there is no privileged helper lingering in memory to inspect or attack.
 
+## Optional tab completion
+
+Shells treat `elevate` as a regular command, so to get `sudo`-style “complete the next word” behavior you can add a tiny wrapper completion:
+
+### Bash
+
+Save the following as `/etc/bash_completion.d/elevate` (system-wide) or `~/.local/share/bash-completion/completions/elevate`:
+
+```bash
+_elevate()
+{
+    _command_offset 1
+}
+complete -F _elevate elevate
+```
+
+### Zsh
+
+Add to your `.zshrc`:
+
+```zsh
+_elevate() { _normal -p 1 }
+compdef _elevate elevate
+```
+
+After reloading your shell, `elevate apt-g<Tab>` will expand via the wrapped command’s completion rules just like `sudo`.
+
 ## Development
 
 Run the standard checks before contributing changes:
