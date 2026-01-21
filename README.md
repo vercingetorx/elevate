@@ -88,13 +88,3 @@ compdef _elevate elevate
 ```
 
 After reloading your shell, `elevate apt-g<Tab>` will expand via the wrapped command’s completion rules just like `sudo`.
-
-## Development
-
-Run the standard checks before contributing changes:
-
-```bash
-cargo fmt
-cargo clippy -- -D warnings
-cargo test    # (no tests today, but keeps CI wiring ready)
-```
